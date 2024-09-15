@@ -1,0 +1,154 @@
+body {
+  font-family: "Source Sans Pro", sans-serif;
+}
+
+.trigger {
+  padding: 0 24px;
+  font-size: 18px;
+  line-height: 64px;
+  cursor: pointer;
+  transition: color 0.3s;
+}
+
+.trigger:hover {
+  color: #1890ff;
+}
+
+.ant-layout {
+  min-height: 100vh;
+  width: 100%;
+  margin-top: 0px;
+}
+
+.logo {
+  height: 64px;
+  margin: 0px;
+  background: rgb(60, 248, 3);
+}
+
+.ant-menu {
+  padding: 10px;
+}
+
+.fs-4-user {
+  padding-top: -100px;
+  font-size: 1.7em;
+  cursor: pointer;
+}
+
+.fs-4-notification {
+  font-size: 1.8em;
+  cursor: pointer;
+}
+
+.fs-5-language {
+  font-size: 1.4em;
+  cursor: pointer;
+}
+
+.search-bar {
+  margin-left: -850px;
+  margin-top: 10px;
+  height: fit-content;
+  display: flex;
+  background-color: #ebeff3;
+  border-radius: 9px;
+  gap: 3px;
+  padding: 0.1rem 1.5rem;
+}
+
+fs-4 {
+  font-size: large;
+}
+
+.sales_status {
+  width: 405px;
+  border-radius: 8px;
+  padding: 1rem 1rem;
+  height: 285px;
+  font-weight: bold;
+  display: inline-block;
+  background-color: #ebecf1;
+}
+
+.sales_revenue_1 {
+  width: 360px;
+  padding-top: 15px;
+  font-family: 'Anuphan', sans-serif;
+}
+.sales_revenue_2 {
+  width: 360px;
+  padding-top: 5px;
+  font-family: 'Anuphan', sans-serif;
+}
+.sales_revenue_3 {
+  width: 360px;
+  padding-top: 5px;
+  font-family: 'Anuphan', sans-serif;
+}
+
+.fromLabel {
+  font-size: 15px;
+  font-weight: 450;
+}
+
+.btn {
+  background: #043f56;
+  color: aliceblue;
+  outline: #043f56;
+  margin-top: 8px;
+  width: 200px;
+  height: 50px;
+}
+
+.container {
+  margin-left: -10px;
+  margin-top: 20px;
+  width: 100%;
+  min-height: 60vh;
+  overflow-x: auto;
+}
+
+.thead {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.table .thead-light{
+  white-space: nowrap;
+  background-color: #456a79;
+  min-height: 20vh;
+  color: #bfcedc;
+  font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+  font-size: 16px;
+}
+
+.thead-light tr th:nth-child(1){
+  min-width: 70px;
+}
+
+.thead-light tr th:nth-child(2){
+  min-width: 100px;
+}
+
+.thead-light tr th:nth-child(3){
+  min-width: 100px;
+}
+
+.table tbody tr:hover{
+  background: #b4c6ce;
+}
+
+.deleteIcon {
+  margin-left: 12px;
+  transition: 0.21s ease-in-out;
+  cursor: pointer;
+  color: darkgray;
+}
+
+.editIcon {
+  transition: 0.21s ease-in-out;
+  cursor: pointer;
+  color: darkgray;
+}
