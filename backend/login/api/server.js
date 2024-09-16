@@ -7,15 +7,12 @@ import userRoutes from "./routes/users.js";
 
 import cors from "cors";
 
-
-
 const app = express();
 
 //allows us access environment variables like dotenv files
 config();
 
 dbConnect();
-
 
 //allows us get json object in request body
 app.use(express.json());
@@ -29,9 +26,5 @@ app.use("/api", authRoutes);
 app.use("/api/refreshToken", refreshTokenRoutes);
 app.use("/api/users", userRoutes);
 
-
-
-
 const port = process.env.PORT || 8080;
 app.listen(port, ()=> console.log(`Listening on port ${port}...`));
-
