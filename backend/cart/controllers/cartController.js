@@ -1,27 +1,24 @@
-// controllers/todo.js
 const Cart = require("../models/cart");
 
-
 exports.getAllCartItems = (req, res) => {
-    Cart.find()
-        .then((cartItem) => res.json(cartItem))
-        .catch((err) =>
-            res
-                .status(404)
-                .json({ message: "Cart item not found", error: err.message })
-        );
+  Cart.find()
+      .then((cartItem) => res.json(cartItem))
+      .catch((err) =>
+          res
+            .status(404)
+            .json({ message: "Cart item not found", error: err.message })
+      );
 };
 
 exports.postCreateCartItem = (req, res) => {
-    Cart.create(req.body)
-        .then((data) => res.json({ message: "Cart item added successfully", data }))
-        .catch((err) =>
-            res
-                .status(400)
-                .json({ message: "Failed to add cart item", error: err.message })
-        );
+  Cart.create(req.body)
+      .then((data) => res.json({ message: "Cart item added successfully", data }))
+      .catch((err) =>
+          res
+            .status(400)
+            .json({ message: "Failed to add cart item", error: err.message })
+      );
 };
-
 
 exports.getUserCartItems = async (req, res) => {
     const id = req.params.userId;
@@ -29,7 +26,6 @@ exports.getUserCartItems = async (req, res) => {
     const cartItem = cartItems.filter(e => e.userId == id);
     res.json(cartItem);
 };
-
 
 exports.deleteUserCartItems = async (req, res) => {
     const userId = req.params.userId;
@@ -41,22 +37,15 @@ exports.deleteUserCartItems = async (req, res) => {
     }
   }
 
-
-  
-
-  exports.getCartItem = async (req, res) => {
-        const id = req.params.id;
-        const cartItems = await Cart.findById(id);  
-        res.json(cartItems)
-    }
-  
+exports.getCartItem = async (req, res) => {
+      const id = req.params.id;
+      const cartItems = await Cart.findById(id);  
+      res.json(cartItems)
+}
 
 exports.getUserCartCount = async (req, res) => {
-
     const id = req.params.id;
-    
     const filter = { _id: id };
-
     const cartItems = await Cart.find();
     const cartItem = cartItems.filter(e => e._id == id );
     var c = parseInt(cartItem.quantity);
@@ -66,16 +55,7 @@ exports.getUserCartCount = async (req, res) => {
     let doc = await Cart.updateMany(filter, update);
 
     res.json(doc);
-    // const cartItem = await Cart.findById(req.params.id);
-    // var count = cartItem.quantity;
-    // count=count+1;
-    // const newCartItem = {...cartItem, quantity: count};
-    // Cart.findOneAndReplace(newCartItem);
 };
-
-
-
-
 
 exports.deleteCartItem = (req, res) => {
     Cart.findByIdAndRemove(req.params.id, req.body)
@@ -116,7 +96,6 @@ exports.getCartCount = async(req, res) =>{
   const cartItem = cartItems.filter(e => e.userId == id);
   res.json(cartItem.length);
 }
-
 
 exports.putCartItem = async (req, res) => {
   const id = req.params.id;
