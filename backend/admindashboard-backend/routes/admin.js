@@ -1,28 +1,27 @@
 const router = require("express").Router();
-let User = require("../models/User");
+const User = require("../models/User");
+const { verifyAdmin } = require("../middleware/authMiddleware");
 
-//Get admin ({role: "admin"}) without ("-password")
-router.route("/:id").get((req, res) => {
-  User.findById(req.params.id) &&
-    { role: "admin" }
-      .then((User) => res.json(User))
-      .catch((err) => res.status(400).json("Error: " + err));
+router.get("/:id", verifyAdmin, (req, res) => {
+  User.findById(req.params.id)
+    .select("-password -re_enter_pw") // Exclude password fields
+    .then((user) => {
+      if (user.role !== "admin") {
+        return res.status(403).json("Access denied. Not authorized.");
+      }
+      res.json(user);
+    })
+    .catch((err) => res.status(400).json("Error: " + err));
 });
 
-//Create the admin
-router.route("/add").post((req, res) => {
-  const name = req.body.name;
-  const email = req.body.email;
-  const phone = req.body.phone;
-  const role = req.body.role;
-  const password = req.body.password;
-  const re_enter_pw = req.body.re_enter_pw;
+router.post("/add", verifyAdmin, (req, res) => {
+  const { name, email, phone, password, re_enter_pw } = req.body;
 
   const newAdmin = new User({
     name,
     email,
     phone,
-    role,
+    role: "admin", // Set role to admin
     password,
     re_enter_pw,
   });
@@ -33,10 +32,9 @@ router.route("/add").post((req, res) => {
     .catch((err) => res.status(400).json("Error: " + err));
 });
 
-//Remove an existing registered admin
-router.route("/remove/:id").delete((req, res) => {
+router.delete("/remove/:id", verifyAdmin, (req, res) => {
   User.findByIdAndDelete(req.params.id)
-    .then(() => res.json("Admin deleted successfully.."))
+    .then(() => res.json("Admin deleted successfully..."))
     .catch((err) => res.status(400).json("Error: " + err));
 });
 
