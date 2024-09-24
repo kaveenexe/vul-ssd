@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
-import Navbar from "../components/Home/navbar"; // Import the Navbar component
-import "../styles/Login.css"; // Import a CSS file for custom styles
+import Navbar from "../components/Home/navbar";
+import "../styles/Login.css";
 import loginImage from "../images/image.png";
 import google from "../images/google-logo.png";
 
@@ -10,28 +10,12 @@ const Login = () => {
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [csrfToken, setCsrfToken] = useState("");
-
-  useEffect(() => {
-    fetch("http://localhost:8081/api/getCsrfToken", {
-      method: "GET",
-      credentials: "include",
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        setCsrfToken(data.csrfToken);
-      })
-      .catch((error) => {
-        console.error("Error fetching CSRF token:", error);
-      });
-  }, []);
 
   const checkLogin = async () => {
     await fetch("http://localhost:8081/api/login", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        "CSRF-Token": csrfToken,
       },
       credentials: "include",
       body: JSON.stringify({
@@ -49,7 +33,6 @@ const Login = () => {
             timer: 1500,
             backdrop: `rgba(0, 0, 0, 0.4)`,
           });
-          navigate("/my-account");
           return res.json();
         }
         throw new Error("Login failed");
@@ -58,6 +41,7 @@ const Login = () => {
         localStorage.setItem("rfkey", data.refreshToken);
         localStorage.setItem("isLogged", true);
         await setUsername();
+        navigate("/"); // Redirect on successful login
       })
       .catch(() => {
         Swal.fire({
@@ -76,7 +60,6 @@ const Login = () => {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        "CSRF-Token": csrfToken,
       },
       credentials: "include",
       body: JSON.stringify({
@@ -97,17 +80,39 @@ const Login = () => {
       });
   };
 
+  function redirect(url) {
+    window.location.href = url;
+  }
+
+  async function auth() {
+    try {
+      const response = await fetch(
+        "http://localhost:8081/oauth/google/request",
+        {
+          method: "POST",
+        }
+      );
+
+      if (!response.ok) {
+        const errorText = await response.text();
+        throw new Error(`Error: ${response.status}, Message: ${errorText}`);
+      }
+
+      const data = await response.json();
+      console.log(data);
+      redirect(data.url);
+    } catch (error) {
+      console.error("Error in auth:", error);
+    }
+  }
+
   return (
     <>
-      <Navbar /> {/* Add the Navbar component */}
+      <Navbar />
       <section className="login-container">
         <div className="login-page">
           <div className="image-section">
-            <img
-              src={loginImage} // Replace this with your image path
-              alt="Side visual"
-              className="login-image"
-            />
+            <img src={loginImage} alt="Side visual" className="login-image" />
           </div>
           <div className="form-section">
             <h2 className="text-center">Welcome to HerbMart!</h2>
@@ -128,7 +133,6 @@ const Login = () => {
                   value={email}
                 />
               </div>
-
               <div className="form-group">
                 <label htmlFor="password" className="form-label">
                   Password
@@ -142,7 +146,6 @@ const Login = () => {
                   value={password}
                 />
               </div>
-
               <div className="form-group d-flex justify-content-between align-items-center">
                 <div className="form-check">
                   <input
@@ -158,7 +161,6 @@ const Login = () => {
                   Forgot password?
                 </a>
               </div>
-
               <button
                 type="button"
                 className="login-button"
@@ -169,7 +171,11 @@ const Login = () => {
 
               <p className="text-center mt-3">or</p>
 
-              <button type="button" className="google-signin">
+              <button
+                type="button"
+                className="google-signin"
+                onClick={() => auth()}
+              >
                 <img src={google} alt="Google" className="google-logo" />
                 Sign in with Google
               </button>
