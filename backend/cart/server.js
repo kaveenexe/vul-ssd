@@ -12,7 +12,9 @@ const cart = require("./routes/cartRoute"); // added
 const cors = require("cors");
 app.use(cors());
 
-// Connect to the database
+
+app.disable("x-powered-by");  // added to fix Information Exposure vulnerability
+
 connectDB();
 
 // Initialize middleware
@@ -22,6 +24,7 @@ app.use(cookieParser()); // Middleware to parse cookies
 
 // Disable X-Powered-By header
 app.disable("x-powered-by");
+
 
 // Set up CSRF protection
 const csrfProtection = csrf({ cookie: true });
@@ -36,6 +39,7 @@ app.use((req, res, next) => {
 app.get("/", (req, res) => res.send("Server up and running"));
 
 // Use routes
+
 app.use("/api/cart", cart); // added
 
 // Handle CSRF token errors
@@ -53,5 +57,7 @@ app.use((err, req, res, next) => {
 const PORT = process.env.PORT || 9010;
 
 app.listen(PORT, () => {
-  console.log(`Server is running on http://localhost:${PORT}`);
+
+    console.log(`server is running on http://localhost:${PORT}`);
+
 });
