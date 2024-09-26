@@ -12,13 +12,15 @@ var cors = require('cors')
 
 app.use(cors())
 
+// Disable information exposure
+app.disable("x-powered-by");  // added to fix Information Exposure vulnerability
+
 // connect database
 connectDB();
 
 // initialize middleware
 app.use(express.json({ extended: false }));
 app.get("/", (req, res) => res.send("Server up and running"));
-
 
 app.use("/api/cart", cart); // added
 
