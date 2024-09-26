@@ -13,3 +13,70 @@
   justify-content: space-around;
 }
 
+/* NavigationBar.css */
+.custom-navbar {
+  background-color: #ffffff;
+  /* Customize background color */
+  padding: 0.1rem 0.5rem;
+  /* Adjust padding for navbar */
+}
+
+.navbar-brand {
+  color: #25D828;
+  /* Customize brand color */
+  font-weight: 600;
+  /* Font weight for brand text */
+}
+
+.logo-img {
+  width: 3rem;
+  /* Logo size */
+  height: auto;
+  /* Maintain aspect ratio */
+}
+
+.nav-link {
+  color: #333;
+  /* Default text color */
+  font-weight: 600;
+  /* Medium font weight */
+  margin: 0 1rem;
+  /* Spacing between links */
+  padding: 0.5rem 1rem;
+  /* Padding for better click area */
+}
+
+/* Define the shaking animation */
+@keyframes shake {
+  0% {
+    transform: translateX(0);
+  }
+
+  25% {
+    transform: translateX(-4px);
+  }
+
+  50% {
+    transform: translateX(4px);
+  }
+
+  75% {
+    transform: translateX(-4px);
+  }
+
+  100% {
+    transform: translateX(0);
+  }
+}
+
+/* Apply the shaking animation on hover */
+.nav-link:hover {
+  color: #25D828;
+  /* Change color on hover */
+  background-color: #ffffff;
+  /* Background color on hover */
+  border-radius: 4px;
+  /* Rounded corners for hover effect */
+  animation: shake 0.6s ease;
+  /* Apply shaking animation */
+}

@@ -5,8 +5,7 @@ const Tracking = () => {
   const [uuid, setUuid] = useState(null);
 
   useEffect(() => {
-    const apiKey =
-      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiIwMzQ2YjFiMC1kYjk4LTExZWQtYTI0Ny05MzNiNGM1ODNjOTQiLCJzdWJJZCI6IjY0M2FiMTkxMWE3MGY0N2JiYTAxNGNiMyIsImlhdCI6MTY4MTU2ODE0NX0.ByArH8nDjqzyi56ChkFbxBPCoEsjssWSXIoT5gkSK78";
+    const apiKey = process.env.REACT_APP_API_KEY; // Use environment variable
     const trackingUrl = "https://parcelsapp.com/api/v3/shipments/tracking";
     const shipments = [
       {
@@ -37,7 +36,7 @@ const Tracking = () => {
     const checkTrackingStatus = async () => {
       try {
         const response = await axios.get(
-          `https://parcelsapp.com/api/v3/shipments/tracking?uuid=${uuid}&apiKey=APIKEY`
+          `https://parcelsapp.com/api/v3/shipments/tracking?uuid=${uuid}&apiKey=${process.env.REACT_APP_API_KEY}` // Use environment variable
         );
         const { done } = response.data;
         if (done) {

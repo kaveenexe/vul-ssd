@@ -1,5 +1,5 @@
 import React from "react";
-
+import Navbar from "../components/Home/navbar";
 import HomeBanner from "../components/Home/banner";
 import Wrapper from "../components/Home/wrapper";
 import HomeProduct from "../components/Home/productcard";
@@ -11,8 +11,8 @@ import Footer from "../components/Home/footer";
 export default function Home() {
   return (
     <div>
-      
-      < HomeBanner/>
+      <Navbar />
+      <HomeBanner/>
       <Wrapper />
       <hr />
       {/* <Link to={HomeProduct}>
